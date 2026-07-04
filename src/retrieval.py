@@ -26,4 +26,7 @@ def get_top_chunks(query: str, top_k: int = 3) -> list:
 
     scored_chunks.sort(key = lambda x: x[0], reverse=True) 
 
-    return [chunk for _, chunk in scored_chunks[:top_k]]
+    return [
+    {**chunk, "score": score}
+    for score, chunk in scored_chunks[:top_k]
+]
