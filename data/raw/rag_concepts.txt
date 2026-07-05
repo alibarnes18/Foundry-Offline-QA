@@ -1,0 +1,9 @@
+RAG stands for Retrieval-Augmented Generation. It is an AI design pattern that combines document retrieval with language model generation.
+
+The RAG pipeline has three steps: Retrieve relevant documents, Augment the prompt with retrieved context, Generate an answer using the language model.
+
+RAG reduces hallucinations by grounding the model's answers in real documents. The model can only answer based on the provided context.
+
+Embeddings are numerical vector representations of text. Similar texts produce similar vectors, enabling semantic search.
+
+Cosine similarity is used to measure the similarity between two vectors. A value of 1 means identical, 0 means unrelated.

@@ -1,0 +1,9 @@
+SQLite is a lightweight, serverless, self-contained database engine. It stores all data in a single file on disk.
+
+SQLite requires no separate server process. It is the most widely deployed database engine in the world.
+
+In this project, SQLite stores document chunks and their embedding vectors. Each row contains a source filename, chunk text, and JSON-serialized embedding.
+
+Python has built-in SQLite support through the sqlite3 module. No additional installation is required.
+
+SQLite is ideal for local applications because it is fast, reliable, and requires zero configuration.

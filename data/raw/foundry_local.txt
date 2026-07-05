@@ -1,0 +1,9 @@
+Microsoft Foundry Local is an on-device AI solution that allows running large language models entirely on a user's device without internet connectivity.
+
+Foundry Local provides a lightweight runtime and SDK for running LLMs locally. It supports Windows, macOS, and Linux operating systems.
+
+Foundry Local automatically downloads and manages models. It uses CPU, GPU, or NPU acceleration depending on the device hardware.
+
+No cloud account or API key is required to use Foundry Local. Models run with zero network calls after the initial download.
+
+Supported models include Phi-3.5 Mini, Qwen2.5, and other optimized models from the Foundry Local catalog.
