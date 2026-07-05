@@ -23,19 +23,37 @@ def get_embedding(text: str) -> list[float]:
 
 def get_llm_manager():
     config = Configuration(app_name="foundry-rag")
+    
+    if FoundryLocalManager.instance is not None:
+        return FoundryLocalManager.instance
+    
     manager = FoundryLocalManager(config)
     return manager
 
+_chat_client = None 
+
 def generate_answer(messages: list, manager) -> str:
-    model = manager.catalog.get_model(LLM_ALIAS)
-    model.download(lambda p: print(f"\rDownloading: {p:.0f}%", end="", flush=True))
-    model.load()
+    global _chat_client
     
-    client = model.get_chat_client()
-    response = client.complete_chat(messages)
+    if _chat_client is None:
+        model = manager.catalog.get_model(LLM_ALIAS)
+        model.download(lambda p: None)  
+        model.load()
+        _chat_client = model.get_chat_client()
+    
+    response = _chat_client.complete_chat(messages)
     answer = response.choices[0].message.content
     
     if "<think>" in answer and "</think>" in answer:
         answer = answer.split("</think>")[-1].strip()
     
     return answer
+
+def generate_answer_cloud(messages: list) -> str:
+    response = azure_client.chat.completions.create(
+        model="gpt-4o-mini",  
+        messages=messages,
+        temperature=0.3,
+        max_tokens=512
+    )
+    return response.choices[0].message.content
