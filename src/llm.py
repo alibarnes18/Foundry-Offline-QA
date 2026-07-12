@@ -2,6 +2,7 @@ import os
 from openai import AzureOpenAI
 from dotenv import load_dotenv
 from foundry_local_sdk import FoundryLocalManager, Configuration
+import requests
 
 load_dotenv()
 
@@ -57,3 +58,26 @@ def generate_answer_cloud(messages: list) -> str:
         max_tokens=512
     )
     return response.choices[0].message.content
+
+def generate_answer_local_api(messages: list) -> str:
+
+    url ="http://127.0.0.1:64941/v1/chat/completions"
+
+    headers = {"Content-Type": "application/json"}
+
+    body = {
+        "model": "qwen3-1.7b-cuda-gpu:2",
+        "messages": messages,
+        "temperature": 0.3,
+        "max_tokens": 512
+    }
+
+    response = requests.post(url, json=body, headers=headers, timeout=120)
+    answer = response.json()["choices"][0]["message"]["content"]
+
+    if "<think>"  in answer and "</think>" in answer:
+        answer = answer.split("</think>")[-1].strip()
+
+
+    return answer
+
